@@ -8,12 +8,45 @@
 
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: var(--background-color);
+    /* RUG 
+  background-color: var(--background-color); */
+background-color: #ffffff;
+    
   width: 100%;
   z-index: 3;
-  position: fixed;
-  border-bottom: 1px solid var(--color-neutral-300);
+  position: sticky;
+    
+  /* RUG 
+   border-bottom: 1px solid var(--color-neutral-300); */
+    
+  box-shadow: 0 .25rem .25rem #c1c4c740;
 }
+
+/* RUG */
+/* Sticky-Verhalten für Navigation nach Scroll */
+.nav-wrapper.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+
+}
+
+.nav-container {
+  width: 100%;
+}
+
+.top-bar {
+  background-color: #0d055f; 
+  height: 50px;
+  width: 100%;
+}
+
+/* RUG */
+
+
+
 
 header nav {
   box-sizing: border-box;
@@ -46,6 +79,9 @@ header nav[aria-expanded='true'] {
     gap: 0 32px;
     max-width: 1264px;
     padding: 0 32px;
+
+    background-color: #ffffff;
+      
   }
 
   header nav[aria-expanded='true'] {
@@ -162,9 +198,16 @@ li.nav-drop img {
 }
 
 header nav .nav-brand img {
-  width: 128px;
+    /*RUG 
+  width: 128px; */
+  width: 40px; 
   height: auto;
+
 }
+
+.nav-brand .brand-link { display: inline-flex; align-items: center; }
+.nav-brand .brand-link img { display: block; }
+
 
 /* sections */
 header nav .nav-sections {
@@ -190,6 +233,9 @@ header nav .nav-sections ul {
 header nav .nav-sections ul > li,
 header nav .nav-sections ul > li > a {
   font: var(--type-body-2-strong-font);
+    /* RUG */
+    font-size: 1.625rem;
+    
   letter-spacing: var(--type-body-2-strong-letter-spacing);
 }
 
@@ -334,7 +380,8 @@ header nav .nav-tools {
   height: 100%;
   gap: var(--spacing-small);
   align-items: center;
-  background: var(--background-color);
+/* background: var(--background-color); */
+  background: #ffffff;
   z-index: 3;
 }
 
