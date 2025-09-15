@@ -155,9 +155,42 @@ function setupSubmenu(navSection) {
  */
 export default async function decorate(block) {
   // load nav as fragment
+  /* RUG
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
+  */
+
+
+
+// Try to load local nav, then fall back to root
+let navPath;
+let fragment;
+const navMeta = getMetadata('nav');
+if (navMeta) {
+  navPath = new URL(navMeta, window.location).pathname;
+  fragment = await loadFragment(navPath);
+} else {
+  const pagePath = window.location.pathname.replace(/\/$/, ''); // strip trailing slash
+  const localNav = `${pagePath.substring(0, pagePath.lastIndexOf('/'))}/nav`;
+  try {
+    const localFragment = await loadFragment(localNav);
+    // Check if fragment is loaded and not empty
+    if (localFragment && localFragment.children.length > 0) {
+      navPath = localNav;
+      fragment = localFragment;
+    } else {
+      navPath = '/nav';
+      fragment = await loadFragment(navPath);
+    }
+  } catch {
+    navPath = '/nav';
+    fragment = await loadFragment(navPath);
+  }
+}
+
+
+  
 
   // decorate nav DOM
   block.textContent = '';
