@@ -37,8 +37,8 @@ function closeOnEscape(e) {
 function closeOnFocusLost(e) {
   const nav = e.currentTarget;
   if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
+    ctions = nav.querySelector('.nav-sections');
+    ctionExpanded = navSections.querySelector('[aria-expanded="true"]');
     if (navSectionExpanded && isDesktop.matches) {
       toggleAllNavSections(navSections, false);
       overlay.classList.remove('show');
@@ -211,6 +211,48 @@ if (navMeta) {
     brandLink.closest('.button-container').className = '';
   }
 
+/* RUG */
+// BEGIN: Logo/Brand-Bild immer klickbar machen
+if (navBrand) {
+  // Bild ODER Inline-SVG als Logo zulassen
+  const brandImgOrSvg = navBrand.querySelector('img, svg');
+
+  // bevorzugtes Ziel: Link aus dem Fragment, sonst Home
+  const preferredHref =
+    brandLink?.href ||
+    navBrand.querySelector('a')?.getAttribute('href') ||
+    rootLink('/');
+
+  if (brandImgOrSvg) {
+    // existierendes <a> um das Logo verwenden, falls vorhanden
+    let anchor = brandImgOrSvg.closest('a') || navBrand.querySelector('a');
+
+    if (!anchor) {
+      anchor = document.createElement('a');
+      anchor.href = preferredHref;
+      anchor.className = 'brand-link';
+      anchor.setAttribute('aria-label', 'Home');
+      // Logo in den Link verschieben
+      brandImgOrSvg.replaceWith(anchor);
+      anchor.append(brandImgOrSvg);
+    } else {
+      // sicherstellen, dass das Logo im Link liegt
+      if (!anchor.contains(brandImgOrSvg)) {
+        anchor.append(brandImgOrSvg);
+      }
+      if (!anchor.getAttribute('href')) {
+        anchor.setAttribute('href', preferredHref);
+      }
+      anchor.classList.add('brand-link');
+      anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
+    }
+  }
+}
+// END
+
+
+
+  
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections
@@ -453,11 +495,39 @@ if (navMeta) {
     }
   });
 
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
-  navWrapper.append(nav);
-  block.append(navWrapper);
 
+// RUG Start
+const topBar = document.createElement('div');
+topBar.className = 'top-bar';
+
+const navWrapper = document.createElement('div');
+navWrapper.className = 'nav-wrapper';
+navWrapper.append(nav);
+
+const container = document.createElement('div');
+container.className = 'nav-container';
+container.append(topBar);
+container.append(navWrapper);
+
+block.append(container);
+
+
+const observer = new IntersectionObserver(
+  ([entry]) => {
+    if (!entry.isIntersecting) {
+      navWrapper.classList.add('sticky');
+    } else {
+      navWrapper.classList.remove('sticky');
+    }
+  },
+  { threshold: 0 }
+);
+
+observer.observe(topBar);
+
+// RUG End
+
+  
   navWrapper.addEventListener('mouseout', (e) => {
     if (isDesktop.matches && !nav.contains(e.relatedTarget)) {
       toggleAllNavSections(navSections);
