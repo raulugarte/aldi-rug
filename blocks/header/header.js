@@ -278,6 +278,9 @@ if (navBrand) {
     }
     // --- Mapping fix: HIER das href prüfen/mappen ---
     const rawHref = anchor.getAttribute('href');
+    
+    console.log('rawHref:', rawHref); // <--- TEST!!!
+    
     const mappedHref = mapAemPathToWebUrl(rawHref);
     anchor.setAttribute('href', mappedHref);
     // --- END Mapping Fix ---
