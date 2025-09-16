@@ -250,15 +250,14 @@ if (navBrand) {
   // Bild ODER Inline-SVG als Logo zulassen
   const brandImgOrSvg = navBrand.querySelector('img, svg');
 
-  // bevorzugtes Ziel: Link aus dem Fragment, sonst Home
-  const preferredHref =
-    brandLink?.href ||
-    navBrand.querySelector('a')?.getAttribute('href') ||
-    rootLink('/');
+  // Dynamisch: bevorzugtes Link-Ziel aus Fragment/Editor, sonst Home
+  let anchor = brandImgOrSvg?.closest('a') || navBrand.querySelector('a') || null;
+
+  // Fallback: preferredHref falls kein Link vorhanden
+  const preferredHref = anchor?.getAttribute('href') || rootLink('/');
 
   if (brandImgOrSvg) {
-    let anchor = brandImgOrSvg.closest('a') || navBrand.querySelector('a');
-
+    // Falls KEIN <a> existiert, neu erzeugen und Logo einfügen
     if (!anchor) {
       anchor = document.createElement('a');
       anchor.href = preferredHref;
@@ -267,23 +266,26 @@ if (navBrand) {
       brandImgOrSvg.replaceWith(anchor);
       anchor.append(brandImgOrSvg);
     } else {
+      // Sicherstellen, dass das Logo im <a> liegt
       if (!anchor.contains(brandImgOrSvg)) {
         anchor.append(brandImgOrSvg);
       }
+      // Falls Link im UE-Feld/Fragment fehlt, fallback auf preferredHref
       if (!anchor.getAttribute('href')) {
         anchor.setAttribute('href', preferredHref);
       }
       anchor.classList.add('brand-link');
       anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
     }
-    // --- Mapping fix: HIER das href prüfen/mappen ---
+
+    // --- Mapping fix: Dynamisch, für jede Sprache und jeden UE-Wert ---
     const rawHref = anchor.getAttribute('href');
+    console.log('rawHref:', rawHref); // Debug-Output
     
-    console.log('rawHref:', rawHref); // <--- TEST!!!
-    
+    // Jetzt Mapping ausführen – egal ob en, de, fr, es, extern
     const mappedHref = mapAemPathToWebUrl(rawHref);
     anchor.setAttribute('href', mappedHref);
-    // --- END Mapping Fix ---
+    // --- ENDE Mapping Fix ---
   }
 }
 // END
