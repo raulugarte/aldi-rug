@@ -269,7 +269,7 @@ if (navMeta) {
 
 /* RUG */
 // BEGIN: Logo/Brand-Bild immer klickbar machen
-/* 
+ 
 if (navBrand) {
   // Bild ODER Inline-SVG als Logo zulassen
   const brandImgOrSvg = navBrand.querySelector('img, svg');
@@ -312,10 +312,10 @@ if (navBrand) {
     // --- ENDE Mapping Fix ---
   }
 }
-*/
 
 
-  /* Test */
+
+  /* Test 
 
   if (navBrand) {
   // Bild oder SVG holen
@@ -342,7 +342,7 @@ if (navBrand) {
     anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
   }
 }
-    
+    */
 // END
 
 
