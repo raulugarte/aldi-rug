@@ -15,6 +15,18 @@ const overlay = document.createElement('div');
 overlay.classList.add('overlay');
 document.querySelector('header').insertAdjacentElement('afterbegin', overlay);
 
+/* Test RUG */
+
+function getHeaderImageDataFromDom() {
+  const el = document.getElementById('header-image-data');
+  return el ? JSON.parse(el.textContent) : null;
+}
+
+
+
+
+/* Test RUG */
+
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
@@ -294,7 +306,7 @@ if (navBrand) {
 
 */
 
-  /* Test */
+  /* Test 1 --> Funktioniert, URL ist aber .../nav.html 
 
   if (navBrand) {
   // Bild oder SVG holen
@@ -321,7 +333,38 @@ if (navBrand) {
     anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
   }
 }
-    
+
+*/
+
+/* Test 2*/
+if (navBrand) {
+  // Bild oder SVG holen
+  const brandImgOrSvg = navBrand.querySelector('img, svg');
+  let anchor = brandImgOrSvg?.closest('a') || navBrand.querySelector('a');
+
+  if (!anchor) {
+    // Es gab noch keinen Link: Erstellen und Logo hineinstecken
+    anchor = document.createElement('a');
+    anchor.className = 'brand-link';
+    anchor.setAttribute('aria-label', headerImageData?.linkTitle || 'Home');
+    anchor.href = mappedLinkTarget || '/';
+    if (brandImgOrSvg) anchor.append(brandImgOrSvg);
+    navBrand.append(anchor);
+  } else {
+    // Es gibt schon einen Link: Ziel und Label setzen
+    anchor.setAttribute('href', mappedLinkTarget || '/');
+    anchor.setAttribute('aria-label', headerImageData?.linkTitle || anchor.getAttribute('aria-label') || 'Home');
+    anchor.classList.add('brand-link');
+    // Logo ggf. korrekt einordnen
+    if (brandImgOrSvg && !anchor.contains(brandImgOrSvg)) {
+      anchor.append(brandImgOrSvg);
+    }
+  }
+}
+
+
+
+  
 // END
 
 
