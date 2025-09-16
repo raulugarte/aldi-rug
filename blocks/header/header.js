@@ -257,7 +257,6 @@ if (navBrand) {
     rootLink('/');
 
   if (brandImgOrSvg) {
-    // existierendes <a> um das Logo verwenden, falls vorhanden
     let anchor = brandImgOrSvg.closest('a') || navBrand.querySelector('a');
 
     if (!anchor) {
@@ -265,11 +264,9 @@ if (navBrand) {
       anchor.href = preferredHref;
       anchor.className = 'brand-link';
       anchor.setAttribute('aria-label', 'Home');
-      // Logo in den Link verschieben
       brandImgOrSvg.replaceWith(anchor);
       anchor.append(brandImgOrSvg);
     } else {
-      // sicherstellen, dass das Logo im Link liegt
       if (!anchor.contains(brandImgOrSvg)) {
         anchor.append(brandImgOrSvg);
       }
@@ -279,6 +276,11 @@ if (navBrand) {
       anchor.classList.add('brand-link');
       anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
     }
+    // --- Mapping fix: HIER das href prüfen/mappen ---
+    const rawHref = anchor.getAttribute('href');
+    const mappedHref = mapAemPathToWebUrl(rawHref);
+    anchor.setAttribute('href', mappedHref);
+    // --- END Mapping Fix ---
   }
 }
 // END
