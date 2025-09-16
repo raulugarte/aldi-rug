@@ -152,6 +152,7 @@ function setupSubmenu(navSection) {
 
 /* RUG Start - Prüft Image Link in der Navigation */
 
+/* 
 function mapAemPathToWebUrl(aemPath) {
   if (!aemPath) return '';
   // Externe Links erkennen (http/https oder Mailto)
@@ -168,6 +169,28 @@ function mapAemPathToWebUrl(aemPath) {
   }
   return webPath;
 }
+
+*/
+
+/* Test */
+
+function mapAemPathToWebUrl(aemPath) {
+  if (!aemPath) return '';
+
+  // Externe Links beibehalten
+  if (/^(https?:\/\/|mailto:|tel:|www\.)/i.test(aemPath)) return aemPath;
+
+  // Nur für Aldi-Rug Inhalte
+  //if (!aemPath.startsWith('/content/aldi-rug/')) return aemPath;
+
+  // Falls schon .html dran ist, nicht nochmal hinzufügen
+  if (!aemPath.endsWith('.html')) {
+    return aemPath + '.html';
+  }
+  return aemPath;
+}
+
+
 /* RUG End */
 
 
