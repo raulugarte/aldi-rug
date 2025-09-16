@@ -152,28 +152,6 @@ function setupSubmenu(navSection) {
 
 /* RUG Start - Prüft Image Link in der Navigation */
 
-/* 
-function mapAemPathToWebUrl(aemPath) {
-  if (!aemPath) return '';
-  // Externe Links erkennen (http/https oder Mailto)
-  if (/^(https?:\/\/|mailto:|tel:|www\.)/i.test(aemPath)) return aemPath;
-  // Nur für Aldi-Rug Inhalte
-  if (!aemPath.startsWith('/content/aldi-rug/')) return aemPath;
-  let webPath = aemPath.replace('/content/aldi-rug', '');
-
-  // /index oder /index.html am Ende zu / umschreiben
-  webPath = webPath.replace(/\/index(\.html)?$/, '/');
-  // Falls am Ende kein Slash, dann .html ergänzen
-  if (!webPath.endsWith('/')) {
-    webPath += '.html';
-  }
-  return webPath;
-}
-
-*/
-
-/* Test */
-
 function mapAemPathToWebUrl(aemPath) {
   if (!aemPath) return '';
 
