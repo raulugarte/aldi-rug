@@ -15,7 +15,7 @@ const overlay = document.createElement('div');
 overlay.classList.add('overlay');
 document.querySelector('header').insertAdjacentElement('afterbegin', overlay);
 
-/* Test RUG */
+/* Test 2 RUG */
 
 function getHeaderImageDataFromDom() {
   const el = document.getElementById('header-image-data');
@@ -337,6 +337,12 @@ if (navBrand) {
 */
 
 /* Test 2*/
+
+  const headerImageData = getHeaderImageDataFromDom();
+const linkTarget = headerImageData?.link;
+const mappedLinkTarget = mapAemPathToWebUrl(linkTarget);
+
+  
 if (navBrand) {
   // Bild oder SVG holen
   const brandImgOrSvg = navBrand.querySelector('img, svg');
