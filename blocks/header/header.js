@@ -246,6 +246,7 @@ if (navMeta) {
 
 /* RUG */
 // BEGIN: Logo/Brand-Bild immer klickbar machen
+/* 
 if (navBrand) {
   // Bild ODER Inline-SVG als Logo zulassen
   const brandImgOrSvg = navBrand.querySelector('img, svg');
@@ -288,6 +289,37 @@ if (navBrand) {
     // --- ENDE Mapping Fix ---
   }
 }
+*/
+
+
+  /* Test */
+
+  if (navBrand) {
+  // Bild oder SVG holen
+  const brandImgOrSvg = navBrand.querySelector('img, svg');
+
+  // Dein Ziel-Link aus UE oder Fallback (hier z. B. navPath!)
+  const rawHref = navPath; // <<< use navPath from your editor/logic!
+  const mappedHref = mapAemPathToWebUrl(rawHref);
+
+  let anchor = brandImgOrSvg?.closest('a') || navBrand.querySelector('a');
+
+  if (!anchor) {
+    anchor = document.createElement('a');
+    anchor.className = 'brand-link';
+    anchor.setAttribute('aria-label', 'Home');
+    anchor.href = mappedHref;
+    brandImgOrSvg.replaceWith(anchor);
+    anchor.append(brandImgOrSvg);
+    navBrand.append(anchor);
+  } else {
+    // Im Anchor immer das richtige href setzen!
+    anchor.setAttribute('href', mappedHref);
+    anchor.classList.add('brand-link');
+    anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
+  }
+}
+    
 // END
 
 
