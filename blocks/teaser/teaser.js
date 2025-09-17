@@ -1,4 +1,3 @@
- 
 import {
   div, a, span, img, video, source, button,
   h1,
@@ -173,8 +172,6 @@ export default function decorate(block) {
   block.appendChild(teaser);
 
   
-  
-
 
   // add observer for video and listeners for play/pause
   if (isVideo) observeVideo(block, videoAutoplay);
