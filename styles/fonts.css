@@ -1,3 +1,15 @@
+/* RUG Aldi Fonts */
+@font-face {
+    font-family: "ALDI SUED OT-Regular";
+    src: url("https://db.onlinewebfonts.com/t/07e9a55ea70af04edad5672d67c9abff.eot");
+    src: url("https://db.onlinewebfonts.com/t/07e9a55ea70af04edad5672d67c9abff.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/07e9a55ea70af04edad5672d67c9abff.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/07e9a55ea70af04edad5672d67c9abff.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/07e9a55ea70af04edad5672d67c9abff.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/07e9a55ea70af04edad5672d67c9abff.svg#ALDI SUED OT-Regular")format("svg");
+}
+/* RUG */
+
 @font-face {
     font-family: adobe-clean;
     src: url('../fonts/adobe-clean-normal-400.woff2') format('woff2');
