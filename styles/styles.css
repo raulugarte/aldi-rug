@@ -233,31 +233,68 @@ h6 {
 h1 {
   font: var(--type-display-1-font);
   letter-spacing: var(--type-display-1-letter-spacing);
+
+    /* RUG */
+    color: #00005f;
+    font-weight: 700;
+    letter-spacing: .01em;
+    /* RUG */
+
 }
 
 h2 {
   font: var(--type-display-2-font);
   letter-spacing: var(--type-display-2-letter-spacing);
+
+ /* RUG */
+    color: #00005f;
+    font-weight: 700;
+    letter-spacing: .01em;
+    /* RUG */
 }
 
 h3 {
   font: var(--type-display-3-font);
   letter-spacing: var(--type-display-3-letter-spacing);
+
+ /* RUG */
+    color: #00005f;
+    font-weight: 700;
+    letter-spacing: .01em;
+    /* RUG */
 }
 
 h4 {
   font: var(--type-headline-1-font);
   letter-spacing: var(--type-headline-1-letter-spacing);
+
+ /* RUG */
+    color: #00005f;
+    font-weight: 700;
+    letter-spacing: .01em;
+    /* RUG */
 }
 
 h5 {
   font: var(--type-headline-2-strong-font);
   letter-spacing: var(--type-headline-2-strong-letter-spacing);
+
+ /* RUG */
+    color: #00005f;
+    font-weight: 700;
+    letter-spacing: .01em;
+    /* RUG */
 }
 
 h6 {
   font: var(--type-headline-2-default-font);
   letter-spacing: var(--type-headline-2-default-letter-spacing);
+
+ /* RUG */
+    color: #00005f;
+    font-weight: 700;
+    letter-spacing: .01em;
+    /* RUG */
 }
 
 p,
