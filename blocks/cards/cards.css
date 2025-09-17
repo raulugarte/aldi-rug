@@ -23,7 +23,19 @@
 }
 
 .cards .cards-card-body {
-  margin: var(--spacing-small);
+    
+  /* RUG
+    margin: var(--spacing-small);
+    */
+
+    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+/* RUG */
+
+    
 }
 
 .cards .cards-card-image {
