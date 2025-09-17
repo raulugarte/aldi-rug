@@ -1,3 +1,10 @@
-export default function decorate(block) {
-  // Optional: Styling, etc.
+.text.block {
+  font-family: "ALDI SUED OT-Regular", adobe-clean, Arial, sans-serif;
+  font-size: 1.3rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.text.block strong {
+  color: #0079C2;
 }
