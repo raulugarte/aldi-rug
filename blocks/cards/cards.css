@@ -14,13 +14,13 @@
 .cards > ul > li {
  /* RUG
     border: var(--shape-border-width-1) solid var(--color-neutral-500);
-border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+
     
     */
   background-color: var(--background-color);
-    
-border-radius: 10px 10px 0 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
     /* RUG */
 }
 
@@ -50,7 +50,6 @@ border-radius: 10px 10px 0 0;
   aspect-ratio: 4 / 3;
   object-fit: cover;
     /* RUG */
-border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
 
+border-radius: 10px 10px 0 0;
 }
