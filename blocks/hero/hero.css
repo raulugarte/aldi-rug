@@ -36,3 +36,12 @@
     padding: 40px 32px;
   }
 }
+
+/* blocks/hero/hero.css */
+.hero [data-aue-prop="text"] {
+  border: 2px solid aquamarine;  /* Umrandung */
+  border-radius: 4px;            /* optional: abgerundete Ecken */
+  padding: 10px;                 /* falls nicht schon vorhanden */
+  background: aliceblue;         /* optional: Hintergrund */
+}
+
