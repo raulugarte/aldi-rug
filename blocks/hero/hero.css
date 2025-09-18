@@ -39,7 +39,7 @@
 
 /* RUG */
 .hero [data-aue-prop="text"] {
-  border: 2px solid aquamarine;  /* Umrandung */
+  
   border-radius: 4px;            /* optional: abgerundete Ecken */
   padding: 2px 6px 1px 10px;                 /* falls nicht schon vorhanden */
   background: #ffffffb5;         /* optional: Hintergrund */
