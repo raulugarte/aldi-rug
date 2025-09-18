@@ -165,10 +165,7 @@ if (navBrand) {
   // Bild ODER Inline-SVG als Logo zulassen
   const brandImgOrSvg = navBrand.querySelector('img, svg');
   // bevorzugtes Ziel: Link aus dem Fragment, sonst Home
-  const preferredHref =
-    brandLink?.href ||
-    navBrand.querySelector('a')?.getAttribute('href') ||
-    rootLink('/');
+  const preferredHref = brandLink?.href || navBrand.querySelector('a')?.getAttribute('href') || rootLink('/');
   if (brandImgOrSvg) {
     // existierendes <a> um das Logo verwenden, falls vorhanden
     let anchor = brandImgOrSvg.closest('a') || navBrand.querySelector('a');
