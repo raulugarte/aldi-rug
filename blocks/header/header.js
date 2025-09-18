@@ -195,7 +195,8 @@ if (navBrand) {
 }
 // END
 const navSections = nav.querySelector('.nav-sections');
-if (navSections) {navSections.querySelectorAll(':scope .default-content-wrapper > ul > li')
+if (navSections) {
+  navSections.querySelectorAll(':scope .default-content-wrapper > ul > li')
       .forEach((navSection) => {
         if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
         setupSubmenu(navSection);
