@@ -15,18 +15,6 @@ const overlay = document.createElement('div');
 overlay.classList.add('overlay');
 document.querySelector('header').insertAdjacentElement('afterbegin', overlay);
 
-/* Test 2 RUG */
-
-function getHeaderImageDataFromDom() {
-  const el = document.getElementById('header-image-data');
-  return el ? JSON.parse(el.textContent) : null;
-}
-
-
-
-
-/* Test RUG */
-
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
@@ -49,8 +37,8 @@ function closeOnEscape(e) {
 function closeOnFocusLost(e) {
   const nav = e.currentTarget;
   if (!nav.contains(e.relatedTarget)) {
-    ctions = nav.querySelector('.nav-sections');
-    ctionExpanded = navSections.querySelector('[aria-expanded="true"]');
+    const navSections = nav.querySelector('.nav-sections');
+    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
     if (navSectionExpanded && isDesktop.matches) {
       toggleAllNavSections(navSections, false);
       overlay.classList.remove('show');
@@ -161,75 +149,15 @@ function setupSubmenu(navSection) {
   }
 }
 
-
-/* RUG Start - Prüft Image Link in der Navigation */
-
-function mapAemPathToWebUrl(aemPath) {
-  if (!aemPath) return '';
-
-  // Externe Links beibehalten
-  if (/^(https?:\/\/|mailto:|tel:|www\.)/i.test(aemPath)) return aemPath;
-
-  // Nur für Aldi-Rug Inhalte
-  //if (!aemPath.startsWith('/content/aldi-rug/')) return aemPath;
-
-  // Falls schon .html dran ist, nicht nochmal hinzufügen
-  if (!aemPath.endsWith('.html')) {
-    return aemPath + '.html';
-  }
-  return aemPath;
-}
-
-
-/* RUG End */
-
-
-
-
-
-
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
   // load nav as fragment
-  /* RUG
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
-  */
-
-
-
-// Try to load local nav, then fall back to root
-let navPath;
-let fragment;
-const navMeta = getMetadata('nav');
-if (navMeta) {
-  navPath = new URL(navMeta, window.location).pathname;
-  fragment = await loadFragment(navPath);
-} else {
-  const pagePath = window.location.pathname.replace(/\/$/, ''); // strip trailing slash
-  const localNav = `${pagePath.substring(0, pagePath.lastIndexOf('/'))}/nav`;
-  try {
-    const localFragment = await loadFragment(localNav);
-    // Check if fragment is loaded and not empty
-    if (localFragment && localFragment.children.length > 0) {
-      navPath = localNav;
-      fragment = localFragment;
-    } else {
-      navPath = '/nav';
-      fragment = await loadFragment(navPath);
-    }
-  } catch {
-    navPath = '/nav';
-    fragment = await loadFragment(navPath);
-  }
-}
-
-
-  
 
   // decorate nav DOM
   block.textContent = '';
@@ -248,130 +176,52 @@ if (navMeta) {
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
-
-    /* RUG Start */
-
-   const rawLink = brandLink.getAttribute('href'); // ursprüngliche URL (intern/extern)
-  const mappedLink = mapAemPathToWebUrl(rawLink); // transformiert, falls nötig
-  brandLink.setAttribute('href', mappedLink); // setzt finale URL
-    /* RUG End */
   }
 
-/* RUG */
+  /* RUG */
 // BEGIN: Logo/Brand-Bild immer klickbar machen
-
-/*   
 if (navBrand) {
   // Bild ODER Inline-SVG als Logo zulassen
   const brandImgOrSvg = navBrand.querySelector('img, svg');
 
-  // Dynamisch: bevorzugtes Link-Ziel aus Fragment/Editor, sonst Home
-  let anchor = brandImgOrSvg?.closest('a') || navBrand.querySelector('a') || null;
-
-  // Fallback: preferredHref falls kein Link vorhanden
-  const preferredHref = anchor?.getAttribute('href') || rootLink('/');
+  // bevorzugtes Ziel: Link aus dem Fragment, sonst Home
+  const preferredHref =
+    brandLink?.href ||
+    navBrand.querySelector('a')?.getAttribute('href') ||
+    rootLink('/');
 
   if (brandImgOrSvg) {
-    // Falls KEIN <a> existiert, neu erzeugen und Logo einfügen
+    // existierendes <a> um das Logo verwenden, falls vorhanden
+    let anchor = brandImgOrSvg.closest('a') || navBrand.querySelector('a');
+
     if (!anchor) {
       anchor = document.createElement('a');
       anchor.href = preferredHref;
       anchor.className = 'brand-link';
       anchor.setAttribute('aria-label', 'Home');
+      // Logo in den Link verschieben
       brandImgOrSvg.replaceWith(anchor);
       anchor.append(brandImgOrSvg);
     } else {
-      // Sicherstellen, dass das Logo im <a> liegt
+      // sicherstellen, dass das Logo im Link liegt
       if (!anchor.contains(brandImgOrSvg)) {
         anchor.append(brandImgOrSvg);
       }
-      // Falls Link im UE-Feld/Fragment fehlt, fallback auf preferredHref
       if (!anchor.getAttribute('href')) {
         anchor.setAttribute('href', preferredHref);
       }
       anchor.classList.add('brand-link');
       anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
     }
-
-    // --- Mapping fix: Dynamisch, für jede Sprache und jeden UE-Wert ---
-    const rawHref = anchor.getAttribute('href');
-    console.log('rawHref:', rawHref); // Debug-Output
-    
-    // Jetzt Mapping ausführen – egal ob en, de, fr, es, extern
-    const mappedHref = mapAemPathToWebUrl(rawHref);
-    anchor.setAttribute('href', mappedHref);
-    // --- ENDE Mapping Fix ---
   }
 }
-
-*/
-
-  /* Test 1 --> Funktioniert, URL ist aber .../nav.html 
-
-  if (navBrand) {
-  // Bild oder SVG holen
-  const brandImgOrSvg = navBrand.querySelector('img, svg');
-
-  // Dein Ziel-Link aus UE oder Fallback (hier z. B. navPath!)
-  const rawHref = navPath; // <<< use navPath from your editor/logic!
-  const mappedHref = mapAemPathToWebUrl(rawHref);
-
-  let anchor = brandImgOrSvg?.closest('a') || navBrand.querySelector('a');
-
-  if (!anchor) {
-    anchor = document.createElement('a');
-    anchor.className = 'brand-link';
-    anchor.setAttribute('aria-label', 'Home');
-    anchor.href = mappedHref;
-    brandImgOrSvg.replaceWith(anchor);
-    anchor.append(brandImgOrSvg);
-    navBrand.append(anchor);
-  } else {
-    // Im Anchor immer das richtige href setzen!
-    anchor.setAttribute('href', mappedHref);
-    anchor.classList.add('brand-link');
-    anchor.setAttribute('aria-label', anchor.getAttribute('aria-label') || 'Home');
-  }
-}
-
-*/
-
-/* Test 2*/
-
-  const headerImageData = getHeaderImageDataFromDom();
-const linkTarget = headerImageData?.link;
-const mappedLinkTarget = mapAemPathToWebUrl(linkTarget);
-
-  
-if (navBrand) {
-  // Bild oder SVG holen
-  const brandImgOrSvg = navBrand.querySelector('img, svg');
-  let anchor = brandImgOrSvg?.closest('a') || navBrand.querySelector('a');
-
-  if (!anchor) {
-    // Es gab noch keinen Link: Erstellen und Logo hineinstecken
-    anchor = document.createElement('a');
-    anchor.className = 'brand-link';
-    anchor.setAttribute('aria-label', headerImageData?.linkTitle || 'Home');
-    anchor.href = mappedLinkTarget || '/';
-    if (brandImgOrSvg) anchor.append(brandImgOrSvg);
-    navBrand.append(anchor);
-  } else {
-    // Es gibt schon einen Link: Ziel und Label setzen
-    anchor.setAttribute('href', mappedLinkTarget || '/');
-    anchor.setAttribute('aria-label', headerImageData?.linkTitle || anchor.getAttribute('aria-label') || 'Home');
-    anchor.classList.add('brand-link');
-    // Logo ggf. korrekt einordnen
-    if (brandImgOrSvg && !anchor.contains(brandImgOrSvg)) {
-      anchor.append(brandImgOrSvg);
-    }
-  }
-}
-
-
-
-  
 // END
+
+
+
+
+
+
 
 
 
@@ -619,7 +469,7 @@ if (navBrand) {
   });
 
 
-// RUG Start
+  // RUG
 const topBar = document.createElement('div');
 topBar.className = 'top-bar';
 
@@ -648,9 +498,9 @@ const observer = new IntersectionObserver(
 
 observer.observe(topBar);
 
-// RUG End
-
   
+// RUG
+
   navWrapper.addEventListener('mouseout', (e) => {
     if (isDesktop.matches && !nav.contains(e.relatedTarget)) {
       toggleAllNavSections(navSections);
