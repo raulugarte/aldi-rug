@@ -54,9 +54,15 @@
 
 .content-fragment-wrapper .content-fragment .banner-content .banner-detail .cftitle {
   margin: 0;
-  font-size: 30px;
+ /* font-size: 30px;
   line-height: 50px;
-  font-family: var(--black-font-family);
+  font-family: var(--black-font-family); */
+
+    font: var(--type-display-1-font);
+    letter-spacing: var(--type-display-1-letter-spacing);
+    font-weight: 700;
+    letter-spacing: .01em;
+    
 }
 .content-fragment-wrapper .content-fragment .banner-content .banner-detail .cftitle::after {
   background-color: var(--light-color);
